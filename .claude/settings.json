@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "edit": "ask",
+    "bash": "ask"
+  },
+  "hooks": {
+    "PreCommit": ["./.claude/hooks/pre-commit-secrets-check.sh"]
+  }
+}
