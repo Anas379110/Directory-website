@@ -1,9 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { businessRegistrationSchema } from '../lib/validation/schemas';
 
 export default function RegistrationForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState<boolean>(true);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const resp = await fetch('/api/categories');
+        if (resp.ok) {
+          const json = await resp.json();
+          setCategories(json.data);
+        }
+      } finally {
+        setLoadingCategories(false);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,15 +88,30 @@ export default function RegistrationForm() {
       </div>
       <div>
         <label htmlFor="categoryId" className="block text-sm font-medium mb-1">التصنيف</label>
-        <select id="categoryId" name="categoryId" required className="w-full border rounded px-3 py-2">
-          <option value="">اختر تصنيفًا...</option>
+        <select
+          id="categoryId"
+          name="categoryId"
+          required
+          className="w-full border rounded px-3 py-2"
+          disabled={loadingCategories}
+        >
+          <option value="">{loadingCategories ? 'جاري تحميل التصنيفات...' : 'اختر تصنيفًا...'}</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
         </select>
       </div>
 
       {/* Cloudflare Turnstile — يُضمَّن فعليًا عبر السكربت الرسمي + data-sitekey عند النشر الحقيقي (FR7) */}
       <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
 
-      {errorMsg && <p className="text-red-600 text-sm" aria-live="polite" aria-atomic="true">{errorMsg}</p>}
+      {errorMsg && (
+        <p className="text-red-600 text-sm" aria-live="polite" aria-atomic="true">
+          {errorMsg}
+        </p>
+      )}
 
       <button
         type="submit"
