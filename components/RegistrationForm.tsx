@@ -1,5 +1,3 @@
-'use client';
-
 import { useState } from 'react';
 import { businessRegistrationSchema } from '../lib/validation/schemas';
 
@@ -57,16 +55,16 @@ export default function RegistrationForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-lg">
       <div>
-        <label className="block text-sm font-medium mb-1">اسم الشركة</label>
-        <input name="name" required minLength={2} className="w-full border rounded px-3 py-2" />
+        <label htmlFor="name" className="block text-sm font-medium mb-1">اسم الشركة</label>
+        <input id="name" name="name" required minLength={2} className="w-full border rounded px-3 py-2" />
       </div>
       <div>
-        <label className="block text-sm font-medium mb-1">الوصف</label>
-        <textarea name="description" className="w-full border rounded px-3 py-2" rows={4} />
+        <label htmlFor="description" className="block text-sm font-medium mb-1">الوصف</label>
+        <textarea id="description" name="description" className="w-full border rounded px-3 py-2" rows={4} />
       </div>
       <div>
-        <label className="block text-sm font-medium mb-1">التصنيف</label>
-        <select name="categoryId" required className="w-full border rounded px-3 py-2">
+        <label htmlFor="categoryId" className="block text-sm font-medium mb-1">التصنيف</label>
+        <select id="categoryId" name="categoryId" required className="w-full border rounded px-3 py-2">
           <option value="">اختر تصنيفًا...</option>
         </select>
       </div>

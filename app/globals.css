@@ -1,3 +1,15 @@
+/* Tailwind base imports */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Visually enhance focus-visible states for core interactive elements */
+@layer utilities {
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  [role="tab"]:focus-visible {
+    outline: 2px solid #1D4ED8; /* Directory brand color */
+    outline-offset: 2px;
+  }
+}
