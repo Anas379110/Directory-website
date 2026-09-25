@@ -44,9 +44,16 @@ export default function RegistrationForm() {
     }
   }
 
+  // Accessibility: announce status changes using aria-live
+  const liveRegionProps = {
+    role: 'status',
+    'aria-live': 'polite',
+    'aria-atomic': 'true',
+  };
+
   if (status === 'success') {
     return (
-      <div className="bg-green-50 border border-green-200 text-green-800 rounded p-4">
+      <div role="status" aria-live="polite" aria-atomic="true" className="bg-green-50 border border-green-200 text-green-800 rounded p-4">
         تم استلام طلبك بنجاح — طلبك الآن قيد المراجعة، وسيظهر بالدليل بعد الموافقة.
       </div>
     );
@@ -72,7 +79,7 @@ export default function RegistrationForm() {
       {/* Cloudflare Turnstile — يُضمَّن فعليًا عبر السكربت الرسمي + data-sitekey عند النشر الحقيقي (FR7) */}
       <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
 
-      {errorMsg && <p className="text-red-600 text-sm">{errorMsg}</p>}
+      {errorMsg && <p className="text-red-600 text-sm" aria-live="polite" aria-atomic="true">{errorMsg}</p>}
 
       <button
         type="submit"
