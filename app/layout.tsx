@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import MobileNav from '../components/MobileNav';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -11,11 +12,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl">
       <body className="font-arabic bg-neutral-50 text-neutral-900 min-h-screen flex flex-col">
         <header className="bg-brand text-white">
-          <nav className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="/" className="text-xl font-bold">Directory</a>
-            <a href="/register" className="text-sm bg-white/10 px-3 py-1.5 rounded">
-              سجّل شركتك
-            </a>
+          <nav className="max-w-5xl mx-auto flex items-center justify-between py-3">
+            <div className="flex items-center">
+              <MobileNav />
+              <a href="/" className="ml-2 text-xl font-bold">Directory</a>
+            </div>
+            <div className="hidden md:block">
+              <a href="/register" className="text-sm bg-white/10 px-3 py-1.5 rounded">
+                سجّل شركتك
+              </a>
+            </div>
           </nav>
         </header>
         <main className="flex-1 max-w-5xl mx-auto px-4 py-8 w-full">{children}</main>

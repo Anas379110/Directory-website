@@ -1,5 +1,6 @@
 import { requireAdmin } from '../../lib/auth/requireAdmin';
 import { createAdminSupabaseClient } from '../../lib/supabase/server';
+import ApproveRejectButtons from './ApproveRejectButtons';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
@@ -35,7 +36,7 @@ export default async function AdminQueuePage() {
                 <td className="py-2">{b.name}</td>
                 <td>{new Intl.DateTimeFormat('ar').format(new Date(b.created_at))}</td>
                 <td className="flex gap-2 py-2">
-                  {/* الأزرار الفعلية (Client Component بـ Fetch لـ PATCH /api/admin/queue/:id) تُستكمل بمرحلة UI التفاعلية */}
+                  <ApproveRejectButtons id={b.id} />
                   <button className="text-green-700 underline">موافقة</button>
                   <button className="text-red-700 underline">رفض</button>
                 </td>
